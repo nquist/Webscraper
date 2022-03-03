@@ -1,1 +1,8 @@
 /ProjectInfo.txt
+/make_epub.py
+
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
