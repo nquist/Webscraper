@@ -1,8 +1,8 @@
 /ProjectInfo.txt
 /make_epub.py
+/*ProjectInfo.txt
 
 
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyc

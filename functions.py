@@ -118,7 +118,7 @@ def format_text(content, skip=0, num = False):
                         nx_line = content[starts[i]+j+1]
                     else:
                         nx_line = 'A'
-                    if nx_line[0] != '"' and (nx_line[0].lower() == nx_line[0]):
+                    if (nx_line[0] not in {'"', '*'}) and (nx_line[0].lower() == nx_line[0]):
                         line += '<p>' + content[starts[i]+j] + ' ' + content[starts[i]+j+1] + '</p>\n\n'
                         skip = True
                     else:

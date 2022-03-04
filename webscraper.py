@@ -9,27 +9,38 @@ and then formats it into text files and saves it at the file location.
 """
 import functions
 import os
+import glob
 
-creation = True
-numbering = True
+def run_all_files():
+    files = glob.glob('*ProjectInfo.txt')
+    for file in files:
+        print(file)
+        f = open(file, 'r')
+        lines = f.readlines()
+        f.close()
 
-f = open('ProjectInfo.txt', 'r')
-lines = f.readlines()
-f.close()
+        folder_name = lines[1].replace(" ", '').strip()
+        folder_path = lines[11].strip() + '\\' + folder_name
+        if not os.path.isdir(folder_path):
+            os.mkdir(folder_path)
+        if not os.path.isfile(lines[11].strip() + '\\' + 'ProjectInfo.txt'):
+            src = file
+            dst = lines[11].strip() + '\\' + folder_name + '\\' + 'ProjectInfo.txt'
+            os.popen(f"copy {src} {dst}")
+        os.chdir(folder_path)
+    
+        run = creation(lines)
+        os.chdir('C:\\Users\\nquis\\Documents\\Side Programing Projects\\Webscraper')
+        
 
-folder_name = lines[1].replace(" ", '').strip()
-folder_path = lines[11].strip() + '\\' + folder_name
-if not os.path.isdir(folder_path):
-    os.mkdir(folder_path)
-if not os.path.isfile(lines[11].strip() + '\\' + 'ProjectInfo.txt'):
-    src ='ProjectInfo.txt'
-    dst = lines[11].strip() + '\\' + folder_name + '\\' + 'ProjectInfo.txt'
-    os.popen(f"copy {src} {dst}")
-os.chdir(folder_path)
-
-if creation:
+def creation(lines):
     urls = functions.make_urls(lines[5][:-1], lines[7][:-1], lines[9][:-1])
     offset = int(lines[13])
+    
+    if len(lines) > 14:
+        numbering = True
+    else:
+        numbering = False
 
     remnent = ''
     ch_count = 1
@@ -68,3 +79,4 @@ if creation:
     chapter_title = chapter[4:idx-1]
     ret = functions.write_xhtml(remnent, chapter_title, chapter_num)
 
+run_all = run_all_files()
